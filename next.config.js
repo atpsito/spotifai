@@ -8,7 +8,15 @@ const nextConfig = {
     return config;
   },
   images: {
-    domains: ["i.scdn.co", "media.licdn.com", "scontent-iad3-2.xx.fbcdn.net"]
+    domains: ["i.scdn.co", "media.licdn.com", ""],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "*.xx.fbcdn.net",
+        port: "",
+        pathname: "**"
+      }
+    ]
   }
 };
 

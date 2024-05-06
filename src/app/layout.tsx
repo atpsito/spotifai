@@ -1,11 +1,9 @@
 import "../styles/globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { getServerSession } from "next-auth/next";
 
 import { LayoutProps as Props } from "./types";
 import Providers from "@/components/globals/Providers/Providers";
-import { authOptions } from "@/config/auth.config";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,10 +14,9 @@ export const metadata: Metadata = {
 
 const RootLayout = async (props: Props) => {
   const { children } = props;
-  const session = await getServerSession(authOptions);
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <Providers>{children}</Providers>
       </body>

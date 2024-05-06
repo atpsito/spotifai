@@ -1,18 +1,16 @@
-"use client";
-import React from "react";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import React from "react";
 
-import { NavigationProps as Props } from "./Navigation.types";
-import BackSVG from "images/back.svg";
+import { SearchOverlayProps as Props } from "./SearchOverlay.types";
 import SearchInput from "@/components/globals/SearchInput/SearchInput";
-import { searchValidatorSchema } from "@/utils/form.util";
-import { SearchFormValues } from "@/types/common.types";
-import Profile from "./Profile/Profile";
+import Button from "@/components/globals/Button/Button";
 import { useFetchAiSongs } from "@/services/ai/ai.service.hooks";
 import { useSpotifyStore } from "@/stores/spotify/spotify.store";
+import { SearchFormValues } from "@/types/common.types";
+import { searchValidatorSchema } from "@/utils/form.util";
 
-const Navigation: React.FC<Props> = props => {
+const SearchOverlay: React.FC<Props> = props => {
   const setTracks = useSpotifyStore(state => state.setTracks);
   const deviceId = useSpotifyStore(state => state.deviceId);
   const formMethods = useForm({
@@ -26,7 +24,6 @@ const Navigation: React.FC<Props> = props => {
 
   const submitHandler = async (value: SearchFormValues) => {
     if (!deviceId) return;
-    console.log("searching");
     try {
       const { search } = value;
       const response = await searchSongs({ prompt: search, deviceId });
@@ -37,19 +34,25 @@ const Navigation: React.FC<Props> = props => {
   };
 
   return (
-    <div className="Navigation py-3 flex justify-between items-center">
-      <div className="flex gap-6">
-        <div className="flex gap-3 items-center">
-          <BackSVG />
-          <BackSVG className="rotate-180" />
-        </div>
-        <form onSubmit={handleSubmit(submitHandler)}>
-          <SearchInput placeholder="Write a mood" {...register("search")} />
-        </form>
-      </div>
-      <Profile />
-    </div>
+    <form
+      onSubmit={handleSubmit(submitHandler)}
+      className="SearchOverlay h-full justify-center flex flex-col items-center space-x-2"
+    >
+      <SearchInput
+        inputClassName="h-10 w-full text-lg text-center"
+        className="w-1/2"
+        iconClassName=""
+        withButton={false}
+        {...register("search")}
+        placeholder="Write a mood"
+        autoComplete="off"
+        type="text"
+      />
+      <Button className="w-1/4 mt-10" htmlType="submit">
+        Search
+      </Button>
+    </form>
   );
 };
 
-export default Navigation;
+export default SearchOverlay;

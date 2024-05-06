@@ -1,15 +1,17 @@
+"use client";
 import React from "react";
 import Image from "next/image";
 import dayjs from "dayjs";
 import { twMerge } from "tailwind-merge";
 
 import { SongListProps as Props } from "./SongList.types";
-import { mocks } from "./SongList.helpers";
 
 import PlaySVG from "images/play.svg";
 import Button from "@/components/globals/Button/Button";
+import { useSpotifyStore } from "@/stores/spotify/spotify.store";
 
 const SongList: React.FC<Props> = props => {
+  const tracks = useSpotifyStore(state => state.tracks);
   const titleStyles = "text-neutral-500 text-xs font-medium pb-1 text-left";
   const colTextStyles = "text-neutral-500 text-xs font-medium";
 
@@ -32,7 +34,7 @@ const SongList: React.FC<Props> = props => {
           </tr>
         </thead>
         <tbody>
-          {mocks.tracks.items.map((track, index) => (
+          {tracks?.map((track, index) => (
             <tr key={track.id} className="cursor-pointer">
               <td className="text-center text-neutral-500 text-xs font-medium">
                 {index + 1}
@@ -40,7 +42,7 @@ const SongList: React.FC<Props> = props => {
               <td className="pt-3">
                 <div className="flex gap-2">
                   <Image
-                    src={track.album.images[0].url}
+                    src={track.album.images[0]?.url}
                     alt={track.name}
                     width={48}
                     height={48}

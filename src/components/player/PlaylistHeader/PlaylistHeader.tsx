@@ -1,3 +1,4 @@
+"use client"
 import React from "react";
 import Image from "next/image";
 
@@ -6,11 +7,8 @@ import { mocks } from "../SongList/SongList.helpers";
 import Navigation from "../Navigation/Navigation";
 
 const PlaylistHeader: React.FC<Props> = props => {
-  const imageUrl = mocks.tracks.items[0].album.images[0].url;
-  const width = mocks.tracks.items[0].album.images[0].width;
-  const height = mocks.tracks.items[0].album.images[0].height;
-  const name = mocks.tracks.items[0].name;
   const length = mocks.tracks.items.length;
+
   return (
     <div className="PlaylistHeader flex px-6 pb-6 min-h-[340px] max-h-[400px] h-[30vh] flex-col justify-between">
       <Navigation />

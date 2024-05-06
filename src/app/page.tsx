@@ -1,9 +1,10 @@
 import { getServerSession } from "next-auth/next";
-import { redirect } from 'next/navigation';
+import { redirect } from "next/navigation";
 
 import Home from "@/components/Home/Home";
 import { authOptions } from "@/config/auth.config";
 
+export const dynamic = "force-dynamic";
 
 const Page = async () => {
   const session = await getServerSession(authOptions);
